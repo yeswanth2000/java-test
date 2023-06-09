@@ -12,8 +12,8 @@ pipeline {
     }
 
     environment {
-        AWS_ACCESS_KEY = credentials('aws_access_key')
-        AWS_SECRET_KEY = credentials('aws_secret_key')
+        // AWS_ACCESS_KEY = credentials('aws_access_key')
+        // AWS_SECRET_KEY = credentials('aws_secret_key')
         ARTIFACTID = readMavenPom().getArtifactId()
         VERSION = readMavenPom().getVersion()
         S3_BUCKET = 'raghu-jenkinsartifacts'
@@ -25,6 +25,7 @@ pipeline {
             agent any
             steps {
                 echo 'Build'
+                echo '${ARTIFACTID}'
                 sh 'mvn clean install -Dmaven.test.skip=true'             
             }
         }
@@ -33,7 +34,7 @@ pipeline {
             agent any
             steps {
                 echo 'Test'
-                // sh 'mvn test'
+                sh 'mvn test'
             }
         }
 
