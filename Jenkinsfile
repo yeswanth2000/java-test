@@ -50,11 +50,8 @@ pipeline {
                 script {
                     echo 'Deploy to QA'
                     JARNAME = ARTIFACTID+'-'+VERSION+'.jar'
-                    echo "JARNAME: ${JARNAME}"
-                    // sh "zip ${ARTIFACTID}-${VERSION}.zip 'target/${JARNAME}'"            
+                    echo "JARNAME: ${JARNAME}"          
 
-                    sh 'aws configure set aws_access_key_id $AWS_ACCESS_KEY'
-                    sh 'aws configure set aws_secret_access_key $AWS_SECRET_KEY'
                     sh "aws s3 cp target/${JARNAME} s3://$S3_BUCKET"
 
                     // sh "aws lambda update-function-code --function-name $LAMBDA_FUNCTION  --zip-file fileb://target/${JARNAME}"
@@ -67,7 +64,7 @@ pipeline {
             steps {
                 echo 'Release to Prod'
                 script {
-                    if (env.BRANCH_NAME == "master") {
+                    if (env.BRANCH_NAME == "main") {
                         timeout(time: 1, unit: 'HOURS') {
                             input('Proceed for Prod  ?')
                         }
