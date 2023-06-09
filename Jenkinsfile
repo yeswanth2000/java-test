@@ -98,9 +98,9 @@ pipeline {
     post {
       failure {
         echo 'failed'
-             mail to: 'test@gmail.com',
-             subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
-             body: "Something is wrong with ${env.BUILD_NUMBER}"
+        echo '${env.BUILD_NUMBER}'
+          
+         // can send notifications
       }
       success {
         echo 'Success'
