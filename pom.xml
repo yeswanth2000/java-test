@@ -7,7 +7,7 @@
 	<version>1.0.1</version>
 	<name>sample</name>
 	<packaging>jar</packaging>
-	<description>sample 2022 with Spring Boot</description>
+	<description>sample 2023 with Spring Boot</description>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -32,7 +32,7 @@
 			<plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.6.3</version>
+        <version>3.2.4</version>
         <configuration>
           <createDependencyReducedPom>false</createDependencyReducedPom>
         </configuration>
