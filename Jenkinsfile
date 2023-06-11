@@ -26,7 +26,7 @@ pipeline {
             steps {
                 echo 'Build'
                 echo '${ARTIFACTID}'
-                sh 'mvn clean install -Dmaven.test.skip=true'             
+                sh 'mvn package -Dmaven.test.skip=true'             
             }
         }
 
