@@ -23,26 +23,32 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Build'
-                echo '${ARTIFACTID}'
-                sh 'mvn package -Dmaven.test.skip=true'             
+                script {
+                    echo 'Build'
+                    echo 'ArtifactId: ${ARTIFACTID}'
+                    sh 'mvn package -Dmaven.test.skip=true'
+                }
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Test'
-                sh 'mvn test'
+                script {
+                    echo 'Test'
+                    sh 'mvn test'
+                }
             }
         }
 
         stage('Push to artifactory') {
             steps {
-                echo 'Push to artifactory'
-                JARNAME = ARTIFACTID+'-'+VERSION+'.jar'
-                echo "JARNAME: ${JARNAME}"          
+                script {
+                    echo 'Push to artifactory'
+                    def JARNAME = ${ARTIFACTID}+'-'+${VERSION}+'.jar'
+                    echo "JARNAME: ${JARNAME}"          
 
-                sh "aws s3 cp target/${JARNAME} s3://$S3_BUCKET"
+                    sh "aws s3 cp target/${JARNAME} s3://$S3_BUCKET"
+                }
             }
         }
 
@@ -50,7 +56,7 @@ pipeline {
             agent any
             steps {
                 script {
-                    echo 'Deploy to QA'
+                    echo 'Deploy to Test'
 
 
                     // sh "aws lambda update-function-code --function-name $LAMBDA_FUNCTION  --zip-file fileb://target/${JARNAME}"
