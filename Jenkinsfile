@@ -21,8 +21,7 @@ pipeline {
     }
 
     stages {
-        stage('Build Lambda') {
-            agent any
+        stage('Build') {
             steps {
                 echo 'Build'
                 echo '${ARTIFACTID}'
@@ -31,7 +30,6 @@ pipeline {
         }
 
         stage('Test') {
-            agent any
             steps {
                 echo 'Test'
                 sh 'mvn test'
@@ -39,21 +37,21 @@ pipeline {
         }
 
         stage('Push to artifactory') {
-            agent none
             steps {
                 echo 'Push to artifactory'
+                JARNAME = ARTIFACTID+'-'+VERSION+'.jar'
+                echo "JARNAME: ${JARNAME}"          
+
+                sh "aws s3 cp target/${JARNAME} s3://$S3_BUCKET"
             }
         }
 
-        stage('Deploy to S3') {
+        stage('Deploy to Lambda - Test') {
             agent any
             steps {
                 script {
                     echo 'Deploy to QA'
-                    JARNAME = ARTIFACTID+'-'+VERSION+'.jar'
-                    echo "JARNAME: ${JARNAME}"          
 
-                    sh "aws s3 cp target/${JARNAME} s3://$S3_BUCKET"
 
                     // sh "aws lambda update-function-code --function-name $LAMBDA_FUNCTION  --zip-file fileb://target/${JARNAME}"
                 }          
