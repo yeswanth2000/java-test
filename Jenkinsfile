@@ -86,9 +86,8 @@ pipeline {
 
                         sh "aws s3 cp target/${JARNAME} s3://$S3_BUCKET/"
                         
-                        // if (does_lambda_exist('$LAMBDA_FUNCTION')) {
-                            sh "aws lambda update-function-code --function-name $LAMBDA_FUNCTION --s3-bucket $S3_BUCKET --s3-key ${JARNAME}"
-                        //}  
+
+                       // sh "aws lambda update-function-code --function-name $LAMBDA_FUNCTION --s3-bucket $S3_BUCKET --s3-key ${JARNAME}" 
                     }
                 }
             }
@@ -110,18 +109,4 @@ pipeline {
         echo 'aborted'
       }
     }
-}
-
-def does_lambda_exist(String name) {	
-  isexist=false
-  echo $name
-  try{
-    sh  'aws lambda get-function --function-name test'
-    isexist=true
-  }
-  catch(Exception e) {
-    echo 'Failed'
-    isexist=true
-  }
-  return isexist
 }
