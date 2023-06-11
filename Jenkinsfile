@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script {
                     echo 'Build'
-                    echo 'ArtifactId: ${ARTIFACTID}'
+                    echo "ArtifactId: ${ARTIFACTID}"
                     sh 'mvn package -Dmaven.test.skip=true'
                 }
             }
@@ -58,14 +58,12 @@ pipeline {
                 script {
                     echo 'Deploy to Test'
 
-
                     // sh "aws lambda update-function-code --function-name $LAMBDA_FUNCTION  --zip-file fileb://target/${JARNAME}"
                 }          
             }
         }
 
         stage('Release to Prod') {
-            agent none
             steps {
                 echo 'Release to Prod'
                 script {
@@ -80,17 +78,12 @@ pipeline {
         }
 
          stage('Deploy to Prod') {
-            agent any
+            agent none
             steps {
                 script {
-                    if (env.BRANCH_NAME == "master") {
+                    if (env.BRANCH_NAME == "main") {
                         echo 'Deploy to Prod'
-
-                        JARNAME = ARTIFACTID+'-'+VERSION+'.jar'
-
-                        sh "aws s3 cp target/${JARNAME} s3://$S3_BUCKET/"
                         
-
                        // sh "aws lambda update-function-code --function-name $LAMBDA_FUNCTION --s3-bucket $S3_BUCKET --s3-key ${JARNAME}" 
                     }
                 }
@@ -102,7 +95,7 @@ pipeline {
     post {
       failure {
         echo 'failed'
-        echo '${env.BUILD_NUMBER}'
+        echo "${env.BUILD_NUMBER}"
           
          // can send notifications
       }
