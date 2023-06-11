@@ -3,9 +3,7 @@ pipeline {
 
      options {
         //Disable concurrentbuilds for the same job
-        disableConcurrentBuilds()
-        // Colorize the console log
-        ansiColor("xterm")          
+        disableConcurrentBuilds()         
         // Add timestamps to console log
         timestamps()
         
@@ -14,8 +12,6 @@ pipeline {
     environment {
         // AWS_ACCESS_KEY = credentials('aws_access_key')
         // AWS_SECRET_KEY = credentials('aws_secret_key')
-        ARTIFACTID = readMavenPom().getArtifactId()
-        VERSION = readMavenPom().getVersion()
         S3_BUCKET = 'raghu-jenkinsartifacts'
         LAMBDA_FUNCTION = 'test'
     }
@@ -25,8 +21,7 @@ pipeline {
             steps {
                 script {
                     echo 'Build'
-                    echo "ArtifactId: ${ARTIFACTID}"
-                    sh 'mvn package -Dmaven.test.skip=true'
+                    sh 'mvn package'
                 }
             }
         }
@@ -43,11 +38,9 @@ pipeline {
         stage('Push to artifactory') {
             steps {
                 script {
-                    echo 'Push to artifactory'
-                    def JARNAME = ${ARTIFACTID}+'-'+${VERSION}+'.jar'
-                    echo "JARNAME: ${JARNAME}"          
+                    echo 'Push to artifactory'         
 
-                    sh "aws s3 cp target/${JARNAME} s3://$S3_BUCKET"
+                    sh "aws s3 cp target/sample-1.0.1.jar s3://$S3_BUCKET"
                 }
             }
         }
