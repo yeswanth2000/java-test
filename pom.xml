@@ -34,7 +34,7 @@
         <artifactId>maven-shade-plugin</artifactId>
         <version>3.2.2</version>
         <configuration>
-          <createDependencyReducedPom>false</createDependencyReducedPom>
+          <createDependencyReducedPom>true</createDependencyReducedPom>
         </configuration>
         <executions>
           <execution>
