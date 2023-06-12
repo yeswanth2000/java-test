@@ -44,7 +44,7 @@ pipeline {
             steps {
                 script {
                     echo 'Push to artifactory'         
-                    def JARNAME = ARTIFACTID+'-'+VERSION+'.jar'
+                    JARNAME = ARTIFACTID+'-'+VERSION+'.jar'
                     echo "JARNAME: ${JARNAME}"
                     sh "aws s3 cp target/${JAR_NAME} s3://$S3_BUCKET"
                 }
