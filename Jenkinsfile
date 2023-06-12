@@ -46,7 +46,7 @@ pipeline {
                     echo 'Push to artifactory'         
                     JARNAME = ARTIFACTID+'-'+VERSION+'.jar'
                     echo "JARNAME: ${JARNAME}"
-                    sh "aws s3 cp target/${JAR_NAME} s3://$S3_BUCKET"
+                    sh "aws s3 cp target/${JARNAME} s3://$S3_BUCKET"
                 }
             }
         }
@@ -57,7 +57,7 @@ pipeline {
                 script {
                     echo 'Deploy to Test'
 
-                    sh "aws lambda update-function-code --function-name $LAMBDA_FUNCTION --region us-east-1 --s3-bucket $S3_BUCKET --s3-key ${JAR_NAME}"
+                    sh "aws lambda update-function-code --function-name $LAMBDA_FUNCTION --region us-east-1 --s3-bucket $S3_BUCKET --s3-key ${JARNAME}"
                 }          
             }
         }
