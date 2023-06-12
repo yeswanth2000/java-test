@@ -10,10 +10,13 @@ pipeline {
     }
 
     environment {
+        ARTIFACTID = readMavenPom().getArtifactId()
+        VERSION = readMavenPom().getVersion()
         // AWS_ACCESS_KEY = credentials('aws_access_key')
         // AWS_SECRET_KEY = credentials('aws_secret_key')
         S3_BUCKET = 'raghu-jenkinsartifacts'
         LAMBDA_FUNCTION = 'java-sample-lambq2'
+
     }
 
     stages {
@@ -22,7 +25,7 @@ pipeline {
                 script {
                     echo 'Build'
                      timeout(time: 10) {
-                        sh 'mvn package'
+                        sh 'mvn package -Dmaven.test.skip=true'
                      }
                 }
             }
@@ -41,8 +44,9 @@ pipeline {
             steps {
                 script {
                     echo 'Push to artifactory'         
-
-                    sh "aws s3 cp target/sample-1.0.1.jar s3://$S3_BUCKET"
+                    def JARNAME = $ARTIFACTID+'-'+$VERSION+'.jar'
+                    echo "JARNAME: ${JARNAME}"
+                    sh "aws s3 cp target/${JAR_NAME} s3://$S3_BUCKET"
                 }
             }
         }
@@ -53,7 +57,7 @@ pipeline {
                 script {
                     echo 'Deploy to Test'
 
-                    sh "aws lambda update-function-code --function-name $LAMBDA_FUNCTION --region us-east-1 --s3-bucket $S3_BUCKET --s3-key sample-1.0.1.jar"
+                    sh "aws lambda update-function-code --function-name $LAMBDA_FUNCTION --region us-east-1 --s3-bucket $S3_BUCKET --s3-key ${JAR_NAME}"
                 }          
             }
         }
