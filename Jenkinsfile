@@ -21,7 +21,9 @@ pipeline {
             steps {
                 script {
                     echo 'Build'
-                    sh 'mvn package'
+                     timeout(time: 10) {
+                        sh 'mvn package'
+                     }
                 }
             }
         }
