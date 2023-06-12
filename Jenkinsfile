@@ -13,7 +13,7 @@ pipeline {
         // AWS_ACCESS_KEY = credentials('aws_access_key')
         // AWS_SECRET_KEY = credentials('aws_secret_key')
         S3_BUCKET = 'raghu-jenkinsartifacts'
-        LAMBDA_FUNCTION = 'test'
+        LAMBDA_FUNCTION = 'java-sample-lambq2'
     }
 
     stages {
@@ -53,7 +53,7 @@ pipeline {
                 script {
                     echo 'Deploy to Test'
 
-                    // sh "aws lambda update-function-code --function-name $LAMBDA_FUNCTION  --zip-file fileb://target/${JARNAME}"
+                    sh "aws lambda update-function-code --function-name $LAMBDA_FUNCTION  --zip-file fileb://target/sample-1.0.1.jar"
                 }          
             }
         }
