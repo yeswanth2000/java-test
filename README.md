@@ -1,2 +1,2 @@
 # java-sample
-Sample Code to push to S3 and publish to lambda
+Sample Java Code to Build and push artifacts to S3 and deploy to lambda
