@@ -3,6 +3,6 @@ package com.example.sample;
 
 public class GreetingController {
     public String greeting() {
-        return "Hello World ";
+        return "Lambda is Executed Successfully";
     }
 }
