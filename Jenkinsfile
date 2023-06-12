@@ -12,8 +12,6 @@ pipeline {
     environment {
         ARTIFACTID = readMavenPom().getArtifactId()
         VERSION = readMavenPom().getVersion()
-        // AWS_ACCESS_KEY = credentials('aws_access_key')
-        // AWS_SECRET_KEY = credentials('aws_secret_key')
         S3_BUCKET = 'raghu-jenkinsartifacts'
         LAMBDA_FUNCTION = 'java-sample-lambq2'
 
@@ -61,11 +59,12 @@ pipeline {
         }
 
         stage('Release to Prod') {
+            agent none
             steps {
                 echo 'Release to Prod'
                 script {
                     if (env.BRANCH_NAME == "main") {
-                        timeout(time: 1, unit: 'HOURS') {
+                        timeout(time: 10) {
                             input('Proceed for Prod  ?')
                         }
                     }
@@ -75,7 +74,6 @@ pipeline {
         }
 
          stage('Deploy to Prod') {
-            agent none
             steps {
                 script {
                     if (env.BRANCH_NAME == "main") {
