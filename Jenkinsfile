@@ -53,7 +53,7 @@ pipeline {
                 script {
                     echo 'Deploy to Test'
 
-                    sh "aws lambda update-function-code --function-name $LAMBDA_FUNCTION --s3-bucket $S3_BUCKET --s3-key sample-1.0.1.jar"
+                    sh "aws lambda update-function-code --function-name $LAMBDA_FUNCTION --region us-east-1 --s3-bucket $S3_BUCKET --s3-key sample-1.0.1.jar"
                 }          
             }
         }
