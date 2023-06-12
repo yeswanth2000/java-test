@@ -33,11 +33,14 @@ pipeline {
 
         stage('Test') {
             steps {
-                script {
                     echo 'Test'
                     sh 'mvn test'
                 }
-            }
+                  post {
+                    always {
+                        junit 'target/surefire-reports/*.xml'
+                    }
+                  }
         }
 
         stage('Push to artifactory') {
