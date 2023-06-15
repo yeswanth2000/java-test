@@ -22,7 +22,7 @@ pipeline {
             steps {
                 script {
                     echo 'Build'
-                     timeout(time: 10) {
+                     timeout(time: 5) {
                         sh 'mvn package -Dmaven.test.skip=true'
                      }
                 }
