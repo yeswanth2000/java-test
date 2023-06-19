@@ -3,7 +3,7 @@ def checkoutSourceCode(branchName) {
 }
 
 pipeline {
-    agent any
+    agent { label 'jenkins-slave' }
 
      options {
         //Disable concurrentbuilds for the same job
