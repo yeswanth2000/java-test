@@ -26,8 +26,8 @@ pipeline {
     }
 
     stages {
-
         stage ('Checkout') {
+	agent { label 'jenkins-slave' }
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: "refs/remotes/origin/main"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'raghu-github', url: 'https://github.com/Raghupatik/java-test.git']]])
             }
