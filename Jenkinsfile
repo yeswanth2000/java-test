@@ -29,8 +29,12 @@ pipeline {
         stage ('Checkout') {
 	agent { label 'jenkins-slave' }
             steps {
+		    script {
+			       timeout(time: 1) {
                 checkout([$class: 'GitSCM', branches: [[name: "refs/remotes/origin/main"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'raghu-github', url: 'https://github.com/Raghupatik/java-test.git']]])
-            }
+			       }
+		    }
+	    }
         }
 
         stage('Build') {
@@ -38,7 +42,9 @@ pipeline {
             steps {
                 script {
                     echo 'Build'
-                    sh 'mvn clean install'
+		   timeout(time: 5) {
+			sh 'mvn clean install'
+		   }
                 }
             }
         }
