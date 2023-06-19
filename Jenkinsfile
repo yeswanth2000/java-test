@@ -3,7 +3,7 @@ def checkoutSourceCode(branchName) {
 }
 
 pipeline {
-    agent { label 'jenkins-slave' }
+    agent any
 
      options {
         //Disable concurrentbuilds for the same job
@@ -44,6 +44,7 @@ pipeline {
         }
 
         stage('Push to artifactory') {
+            agent { label 'jenkins-slave' }
             steps {
                 script {
                     echo 'Push to artifactory'
@@ -61,7 +62,7 @@ pipeline {
         }
 
         stage('Deploy to Lambda - Test') {
-            agent any
+            agent { label 'jenkins-slave' }
             steps {
                 script {
                     echo 'Deploy to Test'
