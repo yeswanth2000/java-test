@@ -51,7 +51,7 @@ pipeline {
                     echo "JARNAME: ${JARNAME}"    
 	                //sh 'cp target/priceavailability-api*.war target/priceavailability-api.war'
                     withAWS(profile:'aviall', region:'us-east-1') {
-				        s3Upload(file:"target/${JARNAME}", bucket:$S3_BUCKET, path:"${JARNAME}")
+				        s3Upload(file:"target/${JARNAME}", bucket:"${S3_BUCKET}", path:"${JARNAME}")
 				    }
 
                     // sh "aws s3 cp target/${JARNAME} s3://$S3_BUCKET"
