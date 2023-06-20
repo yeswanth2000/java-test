@@ -19,8 +19,6 @@ pipeline {
     }
 
     environment {
-        ARTIFACTID = readMavenPom().getArtifactId()
-        VERSION = readMavenPom().getVersion()
         S3_BUCKET = 'raghu-jenkinsartifacts'
         LAMBDA_FUNCTION = 'java-sample-lambq2'
     }
@@ -52,6 +50,8 @@ pipeline {
             steps {
                 script {
                     echo 'Push to artifactory'
+		    ARTIFACTID = readMavenPom().getArtifactId()
+        	    VERSION = readMavenPom().getVersion()
                     JARNAME = ARTIFACTID+'-'+VERSION+'.jar'
                     echo "JARNAME: ${JARNAME}"    
 	                //sh 'cp target/priceavailability-api*.war target/priceavailability-api.war'
