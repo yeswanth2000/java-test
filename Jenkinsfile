@@ -14,9 +14,9 @@ pipeline {
         skipDefaultCheckout true  
     }
 
-    parameters {
-        string(name: 'DeployVersion', defaultValue: '', description: 'Input the version to be deployed')
-    }
+    // parameters {
+       // string(name: 'DeployVersion', defaultValue: '', description: 'Input the version to be deployed')
+    // }
 
     environment {
         ARTIFACTID = readMavenPom().getArtifactId()
