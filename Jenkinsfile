@@ -36,9 +36,7 @@ pipeline {
             steps {
                 script {
                     echo 'Build'
-                    timeout(time: 5) {
-                        sh 'mvn clean install'
-                    }
+                    sh 'mvn clean install'
                 }
             }
         }
@@ -91,7 +89,7 @@ pipeline {
                 script {
                     echo 'Deploy to Test'
 
-                    // sh "aws lambda update-function-code --function-name $LAMBDA_FUNCTION --region us-east-1 --s3-bucket $S3_BUCKET --s3-key ${JARNAME}"
+                    sh "aws lambda update-function-code --function-name $LAMBDA_FUNCTION --region us-east-1 --s3-bucket $S3_BUCKET --s3-key ${JARNAME}"
                 }          
             }
         }
@@ -131,7 +129,7 @@ pipeline {
                 script {
                     if (currentBuild.result == 'SUCCESS') {
 			            echo "The deployment process is done, new version is deployed successfully"
-                        mail (to: 'ragupathi.kommidi@gmail.com', subject: "SUCCESS: The job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) is done, new version is deployed successfully", body: "Please go to ${env.BUILD_URL} for the detail")
+                        mail (to: 'ragupathi.kommidi@gmail.com', subject: "SUCCESS: The job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) is done, new version ${VERSION} is deployed successfully", body: "Please go to ${env.BUILD_URL} for the detail")
                     } else {
                         mail (to: 'ragupathi.kommidi@gmail.com', subject: "ERROR: The job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) failed, rollback to last stable version", body: "Please go to ${env.BUILD_URL} for the detail")
 			            echo "ERROR: The job ${env.JOB_NAME} (${env.BUILD_NUMBER}) failed, rollback to last stable version"
