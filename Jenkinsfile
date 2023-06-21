@@ -84,7 +84,7 @@ pipeline {
         }
 
         stage('Deploy to Lambda - Test') {
-            agent { label 'jenkins-slave' }
+            agent { label 'master' }
             steps {
                 script {
                     echo 'Deploy to Test'
