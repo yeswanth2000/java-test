@@ -1,0 +1,73 @@
+{
+	"info": {
+		"name": "API ",
+		"_postman_id": "1ba8a112-d7d0-702b-5484-e9a6f07b5f93",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Test",
+			"description": "",
+			"item": [
+				{
+					"name": "Tomcat API",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f036054f-b1d5-43d3-a85c-27b1fbeed29a",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "https://jsonplaceholder.typicode.com/todos/1",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{path}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "fa87d6bd-a642-41b4-9265-09cac2f6f13f",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "bf774659-fcc4-4d08-8b1d-b0debf20f0a8",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}
