@@ -17,7 +17,7 @@ pipeline {
 
         stage('Sonar Scanning') {
             steps {
-                echo 'Scan'
+                echo 'Sonar Scan'
             }
         }
 
