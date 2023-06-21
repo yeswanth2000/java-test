@@ -3,7 +3,7 @@ def checkoutSourceCode() {
 }
 
 pipeline {
-    agent none
+    agent any
 
      options {
         //Disable concurrentbuilds for the same job
