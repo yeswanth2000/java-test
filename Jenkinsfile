@@ -43,11 +43,11 @@ pipeline {
             }
         }
 
-        stage('Push to artifactory') {
+        stage('Push to S3') {
             agent { label 'jenkins-slave' }
             steps {
                 script {
-                    echo 'Push to artifactory'
+                    echo 'Push to S3'
 		            ARTIFACTID = readMavenPom().getArtifactId()
         	        VERSION = readMavenPom().getVersion()
                     JARNAME = ARTIFACTID+'-'+VERSION+'.jar'
@@ -117,8 +117,7 @@ pipeline {
                     if (env.BRANCH_NAME == "main") {
                         echo 'Deploy to Prod'
                         retry(3) {
-	            		sleep 10
-
+	            		    sleep 10
                         }
                        // sh "aws lambda update-function-code --function-name $LAMBDA_FUNCTION --s3-bucket $S3_BUCKET --s3-key ${JARNAME}" 
                     }
