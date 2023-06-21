@@ -103,7 +103,7 @@ pipeline {
                 script {
                     if (env.BRANCH_NAME == "main") {
                         timeout(time: 10) {
-                            input('Approve for deployment version ${VERSION} on Production?')
+                            input("Approve for deployment version ${VERSION} on Production?")
                         }
                     }
                 }
