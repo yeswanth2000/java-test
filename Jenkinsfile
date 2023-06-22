@@ -20,7 +20,6 @@ pipeline {
             choices: ['All', 'Checkout', 'Build', 'Artifactory', 'DeployTestServer', 'TestTestServer', 'RollbackTestServer', 'DeployProduction', 'TestProduction', 'RollbackProduction'],
             description: 'Choose stage to run. All stages will be run by default.',
             name: 'Stage',
-            defaultValue: 'All'
             )
 	    string(name: 'RollbackVersion', defaultValue: '', description: 'Input the Rollback version to be deployed')
     }
