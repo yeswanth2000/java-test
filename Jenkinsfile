@@ -20,7 +20,7 @@ pipeline {
             choices: ['All', 'Checkout', 'Build', 'Artifactory', 'DeployTestServer', 'TestTestServer', 'RollbackTestServer', 'DeployProduction', 'TestProduction', 'RollbackProduction'],
             description: 'Choose stage to run. All stages will be run by default.',
             name: 'Stage',
-            defaultVaule: 'All'
+            defaultValue: 'All'
             )
 	    string(name: 'RollbackVersion', defaultValue: '', description: 'Input the Rollback version to be deployed')
     }
@@ -44,12 +44,13 @@ pipeline {
         stage('Build') {
             agent { label 'jenkins-slave' }
 
-            echo "Stage: ${params.Stage}"
 
             when {
                 expression { params.Stage == 'All' || params.Stage == 'Build' }
             }
             steps {
+                echo "Stage: ${params.Stage}"
+
                 script {
                     echo 'Build'
                     sh 'mvn clean install'
@@ -170,7 +171,7 @@ pipeline {
         }
 
          stage('Deploy to Prod') {
-            
+
             when {
                 expression { params.Stage == 'All' || params.Stage == 'DeployProduction' }
             }
