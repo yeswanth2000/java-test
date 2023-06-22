@@ -126,7 +126,7 @@ pipeline {
         }
 
        stage ('Rollback Test if deployment failed') {
-            agent { label 'jenkins-slave'}
+            agent { label 'master'}
             when {
                 expression { params.Stage == 'RollbackTestServer' && params.RollbackVersion != '' }
             }
