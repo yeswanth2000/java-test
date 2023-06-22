@@ -20,7 +20,7 @@ pipeline {
             choices: ['All', 'Checkout', 'Build', 'Artifactory', 'DeployTestServer', 'TestTestServer', 'RollbackTestServer', 'DeployProduction', 'TestProduction', 'RollbackProduction'],
             description: 'Choose stage to run. All stages will be run by default.',
             name: 'Stage',
-            )
+        )
 	    string(name: 'RollbackVersion', defaultValue: '', description: 'Input the Rollback version to be deployed')
     }
 
@@ -128,7 +128,7 @@ pipeline {
        stage ('Rollback Test if deployment failed') {
             agent { label 'jenkins-slave'}
             when {
-                expression { (params.Stage == 'All' || params.Stage == 'RollbackTestServer') && currentBuild.result == 'FAILURE' }
+                expression { params.Stage == 'RollbackTestServer' && params.RollbackVersion != '' }
             }
             steps {
                 script {
