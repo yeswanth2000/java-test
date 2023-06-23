@@ -91,7 +91,6 @@ pipeline {
         }
 
         stage ('Run postman test on Test Server') {
-            agent { label 'master'}
             when {
                 expression { params.Stage == 'All' || params.Stage == 'TestTestServer' }
             }
