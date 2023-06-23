@@ -156,7 +156,7 @@ pipeline {
             agent none
 
             when {
-                expression { params.Stage == 'All' || params.Stage == 'DeployProduction' }
+                expression { (params.Stage == 'All' || params.Stage == 'DeployProduction') && branch 'main' }
             }
 
             steps {
@@ -170,6 +170,9 @@ pipeline {
                                 submitter: "admin"
                             )
                         }
+                    }
+                    else {
+                        echo 'Prod Release Skipped'
                     }
                 }
 
