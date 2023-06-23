@@ -11,7 +11,7 @@ pipeline {
         // Add timestamps to console log
         timestamps()
 
-        skipDefaultCheckout true  
+        // skipDefaultCheckout true  
     }
 
     parameters {
@@ -30,15 +30,15 @@ pipeline {
     }
 
     stages {
-        stage ('Checkout') {
-	        agent { label 'jenkins-slave' }
-            when {
-                expression { params.Stage == 'All' || params.Stage == 'Checkout' }
-            }
-            steps {
-                checkoutSourceCode()
-	        }
-        }
+        // stage ('Checkout') {
+	    //     agent { label 'jenkins-slave' }
+        //     when {
+        //         expression { params.Stage == 'All' || params.Stage == 'Checkout' }
+        //     }
+        //     steps {
+        //         checkoutSourceCode()
+	    //     }
+        // }
 
         stage('Build') {
             agent { label 'jenkins-slave' }
