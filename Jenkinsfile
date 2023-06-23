@@ -11,7 +11,7 @@ pipeline {
         // Add timestamps to console log
         timestamps()
 
-        // skipDefaultCheckout true  
+       // skipDefaultCheckout true  
     }
 
     parameters {
@@ -30,15 +30,6 @@ pipeline {
     }
 
     stages {
-        // stage ('Checkout') {
-	    //     agent { label 'jenkins-slave' }
-        //     when {
-        //         expression { params.Stage == 'All' || params.Stage == 'Checkout' }
-        //     }
-        //     steps {
-        //         checkoutSourceCode()
-	    //     }
-        // }
 
         stage('Build') {
             agent { label 'jenkins-slave' }
@@ -207,7 +198,6 @@ pipeline {
                     } else {
                         mail (to: 'ragupathi.kommidi@gmail.com', subject: "ERROR: The job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) failed, rollback to last stable version", body: "Please go to ${env.BUILD_URL} for the detail")
 			            echo "ERROR: The job ${env.JOB_NAME} (${env.BUILD_NUMBER}) failed, rollback to last stable version"
-                        sh 'exit 1'
                     }
                 }
             }
