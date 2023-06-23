@@ -156,7 +156,7 @@ pipeline {
             agent none
 
             when {
-                expression { (params.Stage == 'All' || params.Stage == 'DeployProduction') && branch 'main' }
+                expression { params.Stage == 'All' || params.Stage == 'DeployProduction' }
             }
 
             steps {
