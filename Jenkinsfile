@@ -84,7 +84,14 @@ pipeline {
             }
         }
 
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
+
         stage ('Run postman test on Test Server') {
+            agent { label 'master'}
             when {
                 expression { params.Stage == 'All' || params.Stage == 'TestTestServer' }
             }
@@ -92,7 +99,7 @@ pipeline {
                 stage ('Run postman test on Tomcat Test') {
                     agent { label 'master'}
                     steps {
-                        checkoutSourceCode()
+                        //checkoutSourceCode()
                         script {
                             retry(2) {
                                 try {
@@ -170,7 +177,7 @@ pipeline {
         }
 
          stage('Deploy to Prod') {
-
+            agent { label 'jenkins-slave'}
             when {
                 expression { params.Stage == 'All' || params.Stage == 'DeployProduction' }
             }
