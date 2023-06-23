@@ -85,6 +85,7 @@ pipeline {
         }
 
         stage('Clean Workspace') {
+            agent { label 'jenkins-slave'}
             steps {
                 cleanWs()
             }
